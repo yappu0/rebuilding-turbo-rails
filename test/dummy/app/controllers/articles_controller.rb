@@ -1,8 +1,11 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     @articles = Article.all
+  end
+
+  def show
   end
 
   def new
@@ -40,7 +43,7 @@ class ArticlesController < ApplicationController
     @article.destroy
     respond_to do |format|
       format.html { redirect_to articles_path }
-      format.turbo_stream
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@article) }
     end
   end
 
